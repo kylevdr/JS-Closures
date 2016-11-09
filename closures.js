@@ -16,11 +16,13 @@ another variable called 'inner'. */
 
 // Code Here
 
+var inner = outer();
+
 //Once you do that, invoke inner.
 
 //Code Here
 
-
+inner();
 
 
 
@@ -49,10 +51,9 @@ in your console. */
 
   //Code Here
 
-
-
-
-
+var makeCall = function() {
+  console.log(callFriend()("435-215-9248"));
+};
 
 
 
@@ -68,12 +69,20 @@ properly. */
 
 //Code Here
 
+var makeCounter = function() {
+  var count = 0;
+  return function () {
+    count += 1;
+    return count;
+  }
+};
+
 //Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
+var count = makeCounter();
+count(); // 1
+count(); // 2
+count(); // 3
+count(); // 4
 
 
 
@@ -101,14 +110,19 @@ function counterFactory(value) {
 
 
   return {
-  }
+    inc: function () {
+      value += 1;
+      return value;
+    },
+    dec: function() {
+      value -= 1;
+      return value;
+    }
+  };
 }
 
 
 counter = counterFactory(10);
-
-
-
 
 
 
@@ -129,17 +143,16 @@ function motivation(firstname, lastname){
   var welcomeText = 'You\'re doing awesome, keep it up ';
 
   // code message function here.
+  var message = function() {
+    return welcomeText + firstname + " " + lastname + ".";
+  };
 
 
-  //Uncommment this to return the value of your invoked message function
-  //return message();
+  return message();
 
 }
 
 motivation('Billy', 'Bob'); // 'Your doing awesome keep it up Billy Bob
-
-
-
 
 
 
@@ -171,13 +184,15 @@ var module = (function() {
 	// outside our lexical scope
 
   return {
-    // Code here.
+    publicMethod: function() {
+      return privateMethod();
+    }
   };
 
 })();
 
 // Uncomment this after you create your public method
-//   module.publicMethod();
+module.publicMethod();
 
 
 
@@ -200,13 +215,15 @@ then 3, etc). Run this code in your console to see what the output is. */
 // To make this code work you will need to create a new scope for every iteration.
 function timeOutCounter() {
   for (var i = 0; i <= 5; i++) {
-    setTimeout(function() {
+    var timedConsoleLog = function(i) {setTimeout(function() {
       console.log(i);
-    }, i * 1000)
+    }, i * 1000);
+    }
+    timedConsoleLog(i);
   }
 
   function newScope(i) {
-    console.log(i)
+    console.log(i);
   }
 }
 timeOutCounter();
@@ -220,7 +237,16 @@ timeOutCounter();
 	#PROBLEM-08
 \******************************************************************************/
 
-var funcArray = [];
+var funcItem = makeFuncItem()
+var funcArray = [funcItem, funcItem, funcItem, funcItem, funcItem, funcItem];
+
+function makeFuncItem () {
+  var count = -1;
+  return function() {
+    count ++;
+    return count;
+  };
+};
 
 /*
   Make the following code work
